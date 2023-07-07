@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head') %>
+<body>
+  <video id="create_recipe_bg_vid" autoplay loop muted src="/landing_bg_vid.mp4" type="video/mp4"></video>
+  
+  <div id="landing_overlay">
+    <%- include('./partials/nav') %>
+    <div class="create-recipe-form-cont">
+      <form>
+        <input type="text" id="recipe_id" name="recipe_id" style="display: none;" value="<%= recipe._id %>">
+        <input type="text" id="recipe_name" name="recipe_name" placeholder="Recipe Name" value="<%= recipe.name%>" required>
+        <textarea type="text" id="recipe_desc" name="recipe_desc" placeholder="Recipe Description" required><%= recipe.desc%></textarea>
+        <textarea type="text" id="recipe_ingr" name="recipe_ingr" placeholder="Recipe Ingredients e.g. egg, onions, etc" required><%= recipe.ingr%></textarea>
+        <textarea type="text" id="recipe_instr" name="recipe_instr" placeholder="Recipe Instructions" required><%= recipe.instr%></textarea>
+        <button type="submit" class="create_recipe_form_btn">Update Recipe</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    const form = document.querySelector('form');
+    const recipeId = form.querySelector('#recipe_id');
+    const recipeName = form.querySelector('#recipe_name');
+    const recipeDesc = form.querySelector('#recipe_desc');
+    const recipeIngr = form.querySelector('#recipe_ingr');
+    const recipeInstr = form.querySelector('#recipe_instr');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const formData = JSON.stringify({
+        recipe_id: recipeId.value,
+        recipe_name: recipeName.value,
+        recipe_desc: recipeDesc.value,
+        recipe_ingr: recipeIngr.value,
+        recipe_instr: recipeInstr.value,
+      });
+
+      fetch('/edit-recipe', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: formData
+      }).then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Error occurred while updating the form');
+        }
+      }).then((recipeId) => {
+        window.location.href = `/fullrecipe/${recipeId._id}`;
+      })
+      .catch(err => console.log(err));
+    })
+  </script>
+</body>
+</html>

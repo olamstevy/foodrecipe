@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head') %>
+<body id="recipe_page_body">
+    <video id="landing_bg_vid" autoplay loop muted src="/landing_bg_vid.mp4" type="video/mp4"></video>
+    <div class="page_content">
+        <%- include('./partials/nav') %>
+        <div class="search_bar">
+            <div class="search_field"><input type="text" placeholder="Find your favourite recipe"></div>
+            <div class="search_icon"><img src="/search_icon.svg" alt="Search"></div>
+        </div>
+
+        <div class="food_recipes">
+            <% recipe_list.forEach(recipe => { %>
+             
+            <div class="recipe_card">
+                <div class="recipe_img"><img src="<%= recipe.img %>" alt=""></div>
+                <div class="recipe_details">
+                    <div class="recipe_name"><%= recipe.name %></div>
+                    <div class="recipe_desc"><span>Description: </span> <%= recipe.desc %> </div>
+                    <div class="recipe_ingredient"><span>Ingredients: </span> <%= recipe.ingr %> </div>
+                    <a class="recipe_full_view_btn" href="/fullrecipe/<%= recipe._id %>" >Learn the Secrets</a>
+                    <div class="recipe_links">
+                        <a title="Edit" href="/edit-recipe/<%= recipe._id %>"><img class="recipe_edit_link" src="/edit_icon.svg" alt="Edit"></a>
+                        <img title="Copy link" data-url="/fullrecipe/<%= recipe._id %>" class="recipe_copy_link"src="/copy_link_icon.svg" alt="Copy Link">
+                        <img title="Delete" data-id="<%= recipe._id %>" class="recipe_delete_link" src="/delete_icon.svg" alt="Delete">
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+    </div>
+    <script>
+        let recipe_copy_btn = document.querySelector('.recipe_copy_link');
+        let recipe_del_btn = document.querySelector('.recipe_delete_link');
+
+        recipe_copy_btn.addEventListener('click', () => {
+            let recipe_copy_link = location.host + recipe_copy_btn.dataset.url;
+            navigator.clipboard.writeText(recipe_copy_link)
+            .then(() => alert('Recipe Link successfully copied to clipboard'))
+            .catch((err) => alert(err));
+        })
+
+        recipe_del_btn.addEventListener('click', () => {
+            let recipe_id = recipe_del_btn.dataset.id;
+            fetch(`/delete-recipe/${recipe_id}`, {
+                method: 'delete'
+            }).then((res) => res.text())
+            .then((data) => {
+                window.location.href = data;
+            })
+            .catch((err) => console.log(err));
+        })
+    </script>
+</body>
+</html>
