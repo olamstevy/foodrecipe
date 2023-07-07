@@ -43,7 +43,7 @@
             let recipeDesc = card.querySelector('.recipe_desc').textContent.toLowerCase();
 
             if (recipeName.includes(searchValue) || recipeDesc.includes(searchValue)) {
-                card.style.display = 'block';
+                card.style.display = 'flex';
             } else {
                 card.style.display = 'none';
             }
