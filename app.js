@@ -11,7 +11,7 @@ const app = express();
 
 
 // Connecting to Database
-const dbURI = "mongodb+srv://olamstevytest:olamstevyt3st@recipe.yzlwjgh.mongodb.net/?retryWrites=true&w=majority";
+const dbURI = "mongodb+srv://foodrecipe:foodrecipe@recipe.yzlwjgh.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(dbURI)
     .then(() => {
         app.listen(3000, () => {
