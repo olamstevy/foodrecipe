@@ -23,15 +23,21 @@ body .project_notif {
     top: -100px;
     text-align: center;
     left: 0;
-    width: 100%;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #ffffffee;
-    padding: 10px 20px;
     color: #701708;
     font-family: var(--lato);
     transition-delay: 2s;
     transition: top 0.5s ease;
     z-index: 9999;
 
+}
+
+body .project_notif .notif-content {
+    margin: 10px;
 }
 
 
