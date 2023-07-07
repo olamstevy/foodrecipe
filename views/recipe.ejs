@@ -6,7 +6,7 @@
     <div class="page_content">
         <%- include('./partials/nav') %>
         <div class="search_bar">
-            <div class="search_field"><input type="text" placeholder="Find your favourite recipe"></div>
+            <div class="search_field"><input type="text" id="searchInput" placeholder="Find your favourite recipe"></div>
             <div class="search_icon"><img src="/search_icon.svg" alt="Search"></div>
         </div>
 
@@ -31,6 +31,28 @@
         </div>
     </div>
     <script>
+    let searchInput = document.getElementById('searchInput');
+
+    // Function to filter the recipe cards based on the search input
+    function filterRecipes() {
+        let searchValue = searchInput.value.toLowerCase();
+        let recipeCards = document.getElementsByClassName('recipe_card');
+
+        Array.from(recipeCards).forEach((card) => {
+            let recipeName = card.querySelector('.recipe_name').textContent.toLowerCase();
+            let recipeDesc = card.querySelector('.recipe_desc').textContent.toLowerCase();
+
+            if (recipeName.includes(searchValue) || recipeDesc.includes(searchValue)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Add event listener for the search input field
+    searchInput.addEventListener('input', filterRecipes);
+
         let recipe_copy_btn = document.querySelector('.recipe_copy_link');
         let recipe_del_btn = document.querySelector('.recipe_delete_link');
 
