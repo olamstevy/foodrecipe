@@ -18,6 +18,23 @@ body,
     overflow: hidden;
 }
 
+body .project_notif {
+    position: fixed;
+    top: -100px;
+    text-align: center;
+    left: 0;
+    width: 100%;
+    background-color: #ffffffee;
+    padding: 10px 20px;
+    color: #701708;
+    font-family: var(--lato);
+    transition-delay: 2s;
+    transition: top 0.5s ease;
+    z-index: 9999;
+
+}
+
+
 #recipe_page_body {
     height: fit-content;
     overflow-y: auto;
@@ -423,5 +440,6 @@ body,
     }
     #recipe_page_body .food_recipes .recipe_card .recipe_img {
         width: 100%;
+        height: auto;
     }
 }

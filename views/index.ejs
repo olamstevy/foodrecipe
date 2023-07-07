@@ -2,6 +2,11 @@
 <html lang="en">
 <%- include('./partials/head') %>
 <body>
+  <div class="project_notif">
+    <div class="notification-content">
+      <p>Side project website for portfolio. Anyone can add, update and delete recipes. Pictures are immutable. Simple, functional design showcases skills, encourages hands-on testing.</p>
+    </div>
+  </div>
   <video id="landing_bg_vid" autoplay loop muted src="/landing_bg_vid.mp4" type="video/mp4"></video>
   
   <div id="landing_overlay">
@@ -9,5 +14,16 @@
     <p class="lp_medium_text">Discover delicious recipes for every occasion!</p>
     <a class="lp_cta_btn" href="/recipe">See Our Recipes</a>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const notif = document.querySelector(".project_notif");
+      notif.style.top = "0";
+      
+      // Close the notification when clicked
+      notif.addEventListener("click", () => {
+        notif.style.top = "-100px";
+      });
+    });
+  </script>
 </body>
 </html>

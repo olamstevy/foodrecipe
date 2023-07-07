@@ -57,7 +57,15 @@ app.get('/fullrecipe/:id', (req, res) => {
     const recipeId = req.params.id;
     recipemodel.findById(recipeId)
     .then(result => {
-        res.render('fullrecipe', {page_title: 'Full Recipe', recipe: result});
+        if (result) {
+            res.render('fullrecipe', {page_title: 'Full Recipe', recipe: result});
+        } else {
+            res.redirect('/recipe');
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.redirect('/recipe');
     });
 });
 
@@ -129,22 +137,6 @@ app.post('/create-recipe-submit', upload.single('recipe_img'), (req, res) => {
         });
 });
 
-
-app.get('/database', (req, res) => {
-    var latest_recipe = new recipemodel({
-        name: 'Creamy Mushroom Risoto',
-        desc: 'Indulge the rich and flavorful Creamy Mushroom Risotoo, a classic I talian Dish that combines the earth goodness of mushrooms with the creamy texture of Arborio rice.',
-        ingr: 'Arborio rice, Mushrooms, Onion, Garlic, Vegetable broth, White wine, Parmesan cheese, Butter, Olive oil, Salt, Black pepper',
-        instr: 'Arborio rice, Mushrooms, Onion, Garlic, Vegetable broth, White wine, Parmesan cheese, Butter, Olive oil, Salt, Black pepper',
-        img: 'homepage.png',
-    })
-    var info;
-    latest_recipe.save()
-    .then((data)=> {info = data})
-    .catch((err)=> {info = data});
-    res.send(info);
-});
-
 app.use((req, res) => {
-    res.send(req.url);
+    res.send('404 - ' + req.url + ' does not exist');
 });
